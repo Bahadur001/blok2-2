@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block page__title %}
+    our blogs
+{% endblock page__title %}
+    
+
+{% block body %}
+    <h2>ingilis Meqalelerim</h2>
+    <ul>
+       {% for article in articles  %}
+         <li>
+             <h2>{{article.author}}</h2>
+             <h4><a href="{% url 'article-detail' article.id %}">{{article.title}}</a></h4>
+             <p>{{article.content|safe|truncatechars:70}}</p>
+             <small>{{article.created_date}}</small>
+         </li>
+         <hr>
+       {% endfor %}
+        
+    </ul>
+    </div>
+{% endblock body %}
+    

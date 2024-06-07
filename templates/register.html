@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block page__title %}
+    Register Page
+{% endblock page__title %}
+    
+
+{% block body %}
+    <h2>Register Page</h2>
+
+
+
+    <h2>Contact Form</h2>
+    <form method="post">
+        {% csrf_token %}
+      
+        <div class="form__group">
+            <label for="{{form.username.id_for_label}}">isdifadeci adi:</label>
+            {{form.username}}
+        </div>
+        <div class="form__group">
+            <label for="{{form.password.id_for_label}}">Sifre</label>
+            {{form.password}}
+        </div>      
+        <div class="form__group">
+            <label for="{{form.confirm.id_for_label}}">Sifre yeniden</label>
+            {{form.confirm}}
+        </div>        <button type="submit">Qeydiyyatdan kec</button>
+    </form>
+{% endblock body %}
+    

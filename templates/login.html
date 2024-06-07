@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block page__title %}
+      Login Page
+{% endblock page__title %}
+    
+
+{% block body %}
+    <h2>Login Page</h2>
+
+    <form method="post" >
+        {% csrf_token %}
+      
+<div class="form__group">
+    <label for="{{form.username.id_for_label}}">isdifadeci adi:</label>
+    {{form.username}}
+</div>
+<div class="form__group">
+    <label for="{{form.password.id_for_label}}">Sifre</label>
+    {{form.password}}
+</div>
+        <button class="btn">Daxil ol</button>
+    </form>
+{% endblock body %}
+    

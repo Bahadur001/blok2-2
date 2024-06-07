@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block page__title %}
+    My Blogs
+{% endblock page__title %}
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert{% if message.tags == 'warning' %}__warning{% else %}__success{% endif %}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% block body %}
+    {% if request.user.is_authenticated %}
+        <div class="user_info">
+            <h2>Xos gelmisiniz, <span>{{ request.user.username }}</span></h2>
+        </div>
+    {% else %}
+        <div class="user_info">
+            <h2>Giris etmemisiz...</h2>
+        </div>
+    {% endif %}
+    <div>
+        <div class="articles">
+            <ul>
+               {% for article in articles %}
+    <li>
+        <h2>{{ article.author }}</h2>
+        <h4><a href="{% url 'article-detail' article.id %}">{{ article.title }}</a></h4>
+        <p>{{ article.content|safe|truncatechars:80 }}</p>
+        <small>{{ article.created_date }}</small>
+        <br><br>
+        <a href="{% url 'update' article.id %}"><i class="fa-solid fa-gear"></i></a>
+        <form action="{% url 'delete' article.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <input type="hidden" name="confirm_delete" value="true">
+            <a href="{% url 'delete' article.id %}" class="delete-article" onclick="return confirm('Bu meqaleni silmek isteyirsiniz?')">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+            
+        </form>
+        <br><br>
+    </li>
+    <hr>
+    <br>
+{% endfor %}
+
+                <br>
+            </ul>
+            <a href="{% url 'addarticle' %}">
+                <button class="btn">Meqale elave et</button>
+            </a>
+        </div>
+        <br>
+    </div>
+{% endblock body %}
+<script>
+    document.querySelectorAll('.delete-article').forEach(item => {
+        item.addEventListener('click', event => {
+            event.preventDefault(); // Bağlantının varsayılan davranışını engeller
+
+            const articleId = item.getAttribute('data-article-id');
+            const isConfirmed = confirm('Bu makaleyi silmek istediğinizden emin misiniz?');
+
+            if (isConfirmed) {
+                // Silme işlemini gerçekleştirmek için gerekli URL'yi oluşturun
+                const deleteUrl = `/delete/${articleId}`;
+
+                // Silme işlemi için AJAX isteğini gönderin veya bir sayfa yenilemesi yapın
+                // Örneğin:
+                window.location.href = deleteUrl;
+            }
+        });
+    });
+</script>
+{% endblock content %}

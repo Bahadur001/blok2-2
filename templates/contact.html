@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block page__title %}
+      Contact Page
+{% endblock page__title %}
+    
+
+{% block body %}
+    <h2>Contact Page</h2>
+<form action="." method="post">
+  {% csrf_token %}
+<input type="number" name="num">
+<input type="submit">
+<br>
+
+{% if num %}
+    {{num}}
+{% endif %}
+    
+</form>
+
+{% endblock body %}
+    

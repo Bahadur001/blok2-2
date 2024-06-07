@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block page__title %}
+    meqale detay
+{% endblock page__title %}
+    
+
+{% block body %}
+<div class="articles">
+   
+    <h3>{{article.author}}</h3>
+    <h4>{{article.title}}</h4>
+    <p>{{article.content | safe}}</p>
+    <small>{{article.created_date}}</small>
+        <br><br>
+  
+{% if article.image %}
+<img src="{{article.image.url}}">
+{% endif %}
+
+
+         <hr>
+        
+    </ul>
+    </div>
+
+
+
+{% endblock body %}
+    
