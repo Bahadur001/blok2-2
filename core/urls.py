@@ -16,7 +16,6 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls.static import static
-
 from django.contrib import admin
 from django.urls import path, include
 from article.views import *
@@ -25,19 +24,19 @@ urlpatterns = [
     path("", home__view, name='home'),
     path("about/", about__view, name='about'),
     path("articles/", articles__view, name='articles'),
-    path("article-detail/<int:id>", article__detail__view, name='article-detail'),
-    path("delete/<int:id>", article__delete__view, name='delete'),
+    path("article-detail/<int:id>/", article__detail__view, name='article-detail'),
+    path("delete/<int:id>/", article__delete__view, name='delete'),
+
+    path("comment/<int:id>/", addcomment__view, name='comment'),
     path("addarticle/", addarticle__view, name='addarticle'),
-    path("update/<int:id>.", article__update__view, name='update'),
+    path("update/<int:id>/", article__update__view, name='update'),
     path("dashboard/", dashboard__view, name='dashboard'),
     path("contact/", contact__view, name='contact'),
     path("account/", include("account.urls")),
     path('admin/', admin.site.urls),
-  
-    
-    
-      
-]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+
 # if settings.DEBUG:
 #     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 #     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

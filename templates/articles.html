@@ -8,6 +8,19 @@
 
 {% block body %}
     <h2>ingilis Meqalelerim</h2>
+  <div class="search__form">
+<form>
+    {% csrf_token %}
+    <input name="keyword" type="text" placeholder="axtar..">
+    <button type="submit" class="btn">axtar</button>
+</form>
+
+  </div>
+  
+
+
+    {% if articles %}
+  <div class="articles">
     <ul>
        {% for article in articles  %}
          <li>
@@ -18,8 +31,25 @@
          </li>
          <hr>
        {% endfor %}
-        
-    </ul>
-    </div>
+       </ul>
+      <br> <br>
+    {% else %} 
+  <div>
+    <div class="alet__warning">Meqale yoxdur..</div>
+  </div>
+
+{% endif %}
+
+
+
+<div>
+  
+  <a href="{% url 'addarticle' %}"><button>elave et</button></a>
+</div>
+<br><br>
+
+</div>
+
+
 {% endblock body %}
     

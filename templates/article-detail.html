@@ -1,31 +1,60 @@
+
 {% extends 'base.html' %}
 
-
 {% block page__title %}
-    meqale detay
+    Meqale detaylari
 {% endblock page__title %}
-    
 
 {% block body %}
 <div class="articles">
-   
-    <h3>{{article.author}}</h3>
-    <h4>{{article.title}}</h4>
-    <p>{{article.content | safe}}</p>
-    <small>{{article.created_date}}</small>
-        <br><br>
+    <h3>{{ article.author }}</h3>
+    <h4>{{ article.title }}</h4>
+    <p>{{ article.content | safe }}</p>
+    <small>{{ article.created_date }}</small>
+    <br><br>
   
-{% if article.image %}
-<img src="{{article.image.url}}">
-{% endif %}
+    {% if article.image %}
+    <img src="{{ article.image.url }}">
+    {% endif %}
+    <hr>
+</div>
 
-
-         <hr>
-        
-    </ul>
-    </div>
-
-
-
-{% endblock body %}
+<div class="comments">
+    <h2>Serhler</h2>
     
+    {% if comments %}
+        {% for comment in comments %}
+        <div class="comment">
+            <h4>{{ comment.comment_date }} zamanı: {{ comment.comment_author }} tarafından yazıldı:</h4>
+            <h4>{{ comment.comment_content }}</h4>
+            {% if request.user == comment.user %}
+            <form action="{% url 'delete_comment' comment.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit"><i class="fa-solid fa-trash"></i></button>
+            </form>
+            {% endif %}
+        </div>
+        <hr>
+        {% endfor %}
+    {% else %}
+        <div class="alert__warning">Şerh yoxdur...</div>
+    {% endif %}
+</div>
+
+<div class="comment_form">
+    <h2>Şerh elave et</h2>
+    <form action="{% url 'comment' article.id %}" method="post">
+        {% csrf_token %}
+        
+        <div class="form__group">
+            <label for="commentAuthor">Ad</label>
+            <input type="text" name="comment_author" placeholder="Adınızı girin" id="commentAuthor">
+        </div>
+        <div class="form__group">
+            <label for="commentContent">Şerhiniz</label>
+            <textarea name="comment_content" rows="5" placeholder="Yorumunuzu girin" id="commentContent"></textarea>
+        </div>
+        <button type="submit" class="btn">Gönder</button>
+    </form>
+</div>
+{% endblock body %}
